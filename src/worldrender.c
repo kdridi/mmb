@@ -7,8 +7,22 @@
 #include <assert.h>
 
 #include <GL/glew.h>
-#include "GL/freeglut.h"
-#include "SOIL.h"
+
+#ifdef __APPLE__
+#include <GLUT/glut.h>          /* Open GL Util    APPLE */
+
+void glutBitmapString(void *font, unsigned char* string) {
+}
+
+int glutBitmapHeight(void *font) {
+	return 0;
+}
+
+#else
+#include <GL/glut.h>            /* Open GL Util    OpenGL*/
+#endif
+
+#include "soil/SOIL.h"
 
 #include "defs.h"
 #include "vector.h"
@@ -559,8 +573,7 @@ void worldrenderDraw(World *world, Camera *camera)
 	timer = startTimer();
 
 	// print statistics
-	printf("frame: %i %5li %5li %5li %5li %5li %5li\n", vertices,
-			pre, scene, gui, draw, update, sleep);
+	//printf("frame: %i %5li %5li %5li %5li %5li %5li\n", vertices, pre, scene, gui, draw, update, sleep);
 	fflush(stdout);
 }
 

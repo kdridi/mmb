@@ -5,7 +5,11 @@
 #include <string.h>
 #include <math.h>
 
-#include "GL/freeglut.h"
+#ifdef __APPLE__
+#include <GLUT/glut.h>          /* Open GL Util    APPLE */
+#else
+#include <GL/glut.h>            /* Open GL Util    OpenGL*/
+#endif
 
 #include "defs.h"
 #include "vector.h"
@@ -19,25 +23,20 @@ static Camera *camera;
 static World *world;
 static Ray *ray;
 
-void onDisplay()
-{
+void onDisplay() {
 	worldrenderDraw(world, camera);
 }
 
-void onReshape(int w, int h)
-{
+void onReshape(int w, int h) {
 	worldrenderReshape(world, camera, w, h);
 }
 
-void onMouse(int button, int state, void *data)
-{
+void onMouse(int button, int state, void *data) {
 	if (state == GLUT_UP) {
 		if (button == GLUT_LEFT_BUTTON) {
-			worldSetBlock(world, ray->first,
-					blockGet(BLOCKTYPE_AIR));
+			worldSetBlock(world, ray->first, blockGet(BLOCKTYPE_AIR));
 		} else if (button == GLUT_RIGHT_BUTTON) {
-			worldSetBlock(world, ray->last,
-					blockGet(BLOCKTYPE_CHEST));
+			worldSetBlock(world, ray->last, blockGet(BLOCKTYPE_CHEST));
 		}
 		worldrenderRefresh();
 	}
@@ -58,7 +57,7 @@ int main(int argc, char *argv[]) {
 	glutDisplayFunc(&onDisplay);
 	glutReshapeFunc(&onReshape);
 
-	renderHookMouse(&onMouse, NULL);
+	renderHookMouse(&onMouse, NULL );
 	renderRun();
 	return EXIT_SUCCESS;
 }

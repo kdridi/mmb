@@ -3,6 +3,14 @@
 #ifndef _MMB_RENDER_H
 #define _MMB_RENDER_H
 
+#ifndef VERSION
+#define VERSION "VERSION"
+#endif
+
+#ifndef CODENAME
+#define CODENAME "CODENAME"
+#endif
+
 #include "defs.h"
 #include "vector.h"
 
@@ -30,7 +38,6 @@ typedef struct {
 extern Render *renderInit(int argc, char *argv[]);
 extern void renderRun();
 extern void renderDebug();
-extern void renderHookMouse(void (*func)(int button, int state, void *data),
-		void *data);
+extern void renderHookMouse(void (*func)(int button, int state, void *data), void *data);
 
 #endif /* _MMB_RENDER_H */

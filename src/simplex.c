@@ -21,9 +21,9 @@ Grad grad3[12] = (Grad[]) {
 	{0, 1, 1}, {0, -1, 1}, {0, 1, -1}, {0, -1, -1}
 };
 
-typedef struct SimplexState {
+struct SimplexState {
 	int normal[512], mod12[512];
-} SimplexState;
+};
 
 static int fastFloor(double x) {
 	int xi = (int)x;

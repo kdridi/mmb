@@ -1,5 +1,13 @@
 //! @file
 
+#include <time.h>
+#include <sys/time.h>
+
+#ifdef __MACH__
+#include <mach/clock.h>
+#include <mach/mach.h>
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
@@ -13,7 +21,7 @@ void *knalloc(size_t size) {
 	/* The german word "Knall" means bang/explosion.
 	 * This function's name is thus to be considered a pun. */
 	void *mem = malloc(size);
-	if (mem == NULL) {
+	if (mem == NULL ) {
 		fprintf(stderr, "malloc() failed. out of memory?\n");
 		exit(EXIT_FAILURE);
 	}
@@ -63,7 +71,7 @@ void listInsert(List *list, void *ptr) {
 		list->end = list->mem + size;
 		list->nextFree = list->mem + freeOffset;
 
-		if (list->mem == NULL) {
+		if (list->mem == NULL ) {
 			fprintf(stderr, "realloc() failed. out of memory?\n");
 			exit(EXIT_FAILURE);
 		}
@@ -78,15 +86,15 @@ void **listSearch(List *list, void *ptr) {
 	*(list->nextFree) = ptr;
 
 	void **pos = list->mem;
-	for (; ; pos++) {
+	for (;; pos++) {
 		if (*pos == ptr) {
 			if (pos != list->nextFree)
 				return pos;
 			else
-				return NULL;
+				return NULL ;
 		}
 	}
-	return NULL;
+	return NULL ;
 }
 
 void listReplace(List *list, void *old, void *new) {
@@ -108,7 +116,20 @@ void listRemove(List *list, void *element) {
  * Returns a value that can be passed to stopTimer()
  */
 long startTimer() {
+
+#ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time
+	clock_serv_t cclock;
+	mach_timespec_t mts;
+	host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
+	clock_get_time(cclock, &mts);
+	mach_port_deallocate(mach_task_self(), cclock);
+	tp.tv_sec = mts.tv_sec;
+	tp.tv_nsec = mts.tv_nsec;
+
+#else
 	clock_gettime(CLOCK_REALTIME, &tp);
+#endif
+
 	return (tp.tv_sec % 1000) * 1000000 + tp.tv_nsec / 1000;
 }
 

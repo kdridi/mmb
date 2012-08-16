@@ -21,7 +21,7 @@ typedef struct Bubble {
 	ChunkGroup *chunkGroup;
 } Bubble;
 
-typedef struct Chunk {
+struct Chunk {
 	Vector3i low, high;
 	int status;
 	int cookie;
@@ -31,9 +31,9 @@ typedef struct Chunk {
 	List /*Chunk*/ *adjacent;
 
 	Block **blocks;
-} Chunk;
+};
 
-typedef struct ChunkGroup {
+struct ChunkGroup {
 	Vector3i low;
 
 	int status;
@@ -41,6 +41,6 @@ typedef struct ChunkGroup {
 	List /*Chunk*/ *chunksXS, *chunksXG;
 	List /*Chunk*/ *chunksYS, *chunksYG;
 	List /*Chunk*/ *chunksZS, *chunksZG;
-} ChunkGroup;
+};
 
 #endif /* _MMB_CHUNK_H */
