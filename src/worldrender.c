@@ -7,6 +7,7 @@
 #include <assert.h>
 
 #include <GL/glew.h>
+#include <engine.h>
 
 #ifdef __APPLE__
 #include <GLUT/glut.h>          /* Open GL Util    APPLE */
@@ -455,7 +456,7 @@ void worldrenderInit(World *world, Camera *camera)
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
-	terrainId = SOIL_load_OGL_texture("gmcraft_terrain.png", SOIL_LOAD_AUTO,
+	terrainId = SOIL_load_OGL_texture(engine_resource_path("gmcraft_terrain.png"), SOIL_LOAD_AUTO,
 			SOIL_CREATE_NEW_ID, 0);
 	if (terrainId == 0) {
 		fprintf(stderr, "SOIL Error.\n");

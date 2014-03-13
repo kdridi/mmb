@@ -5,3 +5,5 @@ core
 gmon.out
 Makefile.bak
 
+include/engine.h
+build
