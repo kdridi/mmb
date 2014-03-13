@@ -20,6 +20,14 @@ set(ENGINE_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 
 ################################################################################
+# SOIL
+################################################################################
+add_subdirectory(src/soil)
+
+set(ENGINE_INCLUDE_DIRS ${ENGINE_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}/src/soil  )
+set(ENGINE_LIBRARIES    ${ENGINE_LIBRARIES}    SOIL                            )
+
+################################################################################
 # GLEW
 ################################################################################
 Find_Package ( GLEW REQUIRED )
@@ -112,20 +120,11 @@ add_executable(engine
 	src/render.h
 	src/simplex.c
 	src/simplex.h
-	src/soil/SOIL.c
-	src/soil/SOIL.h
-	src/soil/image_DXT.c
-	src/soil/image_DXT.h
-	src/soil/image_helper.c
-	src/soil/image_helper.h
-	src/soil/stb_image_aug.c
-	src/soil/stb_image_aug.h
-	src/soil/stbi_DDS_aug.h
-	src/soil/stbi_DDS_aug_c.h
 	src/vector.h
 	src/world.c
 	src/world.h
 	src/worldrender.c
 	src/worldrender.h
 )
-target_link_libraries(engine ${ENGINE_LIBRARIES} )
+
+target_link_libraries(engine ${ENGINE_LIBRARIES})

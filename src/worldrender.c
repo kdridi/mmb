@@ -23,7 +23,7 @@ int glutBitmapHeight(void *font) {
 #include <GL/glut.h>            /* Open GL Util    OpenGL*/
 #endif
 
-#include "soil/SOIL.h"
+#include <SOIL.h>
 
 #include "defs.h"
 #include "vector.h"
